@@ -1,0 +1,2 @@
+wwwroot\index.html
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\wwwroot\index.html

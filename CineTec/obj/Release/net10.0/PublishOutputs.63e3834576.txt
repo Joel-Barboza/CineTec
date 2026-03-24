@@ -1,0 +1,9 @@
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\CineTec.exe
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\appsettings.Development.json
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\appsettings.json
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\CineTec.dll
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\CineTec.deps.json
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\CineTec.runtimeconfig.json
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\CineTec.pdb
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\Joel\Documents\Universidad\Bases\CineTec\CineTec\obj\Release\net10.0\PubTmp\Out\Microsoft.OpenApi.dll
