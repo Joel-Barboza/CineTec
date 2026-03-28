@@ -1,1 +1,22 @@
+# Build
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# VS Code / VS
 .vs/
+.vscode/
+
+# Publish
+**/PubTmp/
+**/PublishOutputs/
+
+# OS
+.DS_Store
+Thumbs.db
