@@ -31,6 +31,7 @@ export class MoviesPage {
         throw new Error("No hubo respuesta del servidor");
       }
       const data = await response.json();
+      this.getAllMovies();
       return data;
 
     } catch (error) {

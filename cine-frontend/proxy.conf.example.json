@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://localhost:YOUR_PORT",
+    "secure": false
+  }
+}
