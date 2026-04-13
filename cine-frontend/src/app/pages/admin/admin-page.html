@@ -5,12 +5,14 @@
     padding: 0 16px;
     font-family: sans-serif;
   }
+
   h1 {
     font-size: 18px;
     font-weight: 600;
     margin: 0 0 12px;
     color: #111;
   }
+
   .card {
     background: #fff;
     border: 1px solid #e5e5e5;
@@ -18,12 +20,14 @@
     padding: 20px;
     margin-bottom: 24px;
   }
+
   label {
     display: block;
     font-size: 13px;
     color: #555;
     margin-bottom: 6px;
   }
+
   input {
     width: 100%;
     box-sizing: border-box;
@@ -35,9 +39,11 @@
     outline: none;
     transition: border 0.15s;
   }
+
   input:focus {
     border-color: #888;
   }
+
   button {
     padding: 8px 18px;
     font-size: 14px;
@@ -49,48 +55,57 @@
     color: #fff;
     transition: background 0.15s;
   }
+
   button:hover {
     background: #333;
   }
-  .btn-secondary {
-    background: #fff;
-    color: #111;
-    border: 1px solid #ccc;
+
+  button:disabled {
+    opacity: 0.5;
   }
-  .btn-secondary:hover {
-    background: #f5f5f5;
-  }
+
   ul {
     list-style: none;
     padding: 0;
     margin: 12px 0 0;
   }
+
   li {
     padding: 10px 0;
     border-bottom: 1px solid #f0f0f0;
     font-size: 14px;
     color: #222;
   }
+
   li:last-child {
     border-bottom: none;
+  }
+  p {
+    color: red
   }
 </style>
 
 <div class="page">
-  <!-- <div class="card">
+  <div [hidden]="loginSuccess()" class="card">
+    <h1>Autentificarse</h1>
+    <label>Usuario</label>
+    <input [value]="userValue()" (input)="updateUsernameValue($event)" placeholder="Admin" />
+    <label>Contraseña</label>
+    <input type="password" [value]="passwordValue()" (input)="updatePasswordValue($event)" placeholder="Contraseña" />
+    <p [hidden]="loginSuccess() == null || loginSuccess()">Usuario o Contraseña incorrectos</p>
+    <button [disabled]="!userValue() || !passwordValue()" (click)="authAdmin()">
+      Enviar
+    </button>
+  </div>
+
+
+  <button [hidden]="!loginSuccess()" (click)="logout()">Cerrar Sesión</button>
+  <div class="card" [hidden]="!loginSuccess()" >
     <h1>Agregar Película</h1>
     <label>Nombre</label>
     <input [value]="movieName()" (input)="updateMovieName($event)" placeholder="Ej: Barbie" />
     <button (click)="sendMovie()">Enviar</button>
-  </div> -->
-
-  <div class="card">
-    <h1>Películas</h1>
-    <button class="btn-secondary" (click)="getAllMovies()">Obtener películas</button>
-    <ul>
-      @for (movie of movieList(); track movie.originalName) {
-        <li>{{ movie.originalName }}</li>
-      }
-    </ul>
   </div>
+
+
 </div>
