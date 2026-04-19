@@ -4,19 +4,9 @@
     CINE<span>TEC</span>
   </div>
 
-  <!-- Dashboard
-  <div class="sidebar-section-label">Principal</div>
-  <a class="nav-link-single"
-     routerLink="dashboard"
-     routerLinkActive="active">
-    ⊟ Dashboard
-  </a> -->
-
-  <!-- Secciones con submenú -->
   <div class="sidebar-section-label">Gestión</div>
 
   @for (section of sections; track section.base) {
-  <!-- Botón padre -->
   <div class="nav-parent" [class.open]="isOpen(section.base)" [class.active-parent]="rla.isActive"
     (click)="toggle(section.base)" routerLinkActive #rla="routerLinkActive"
     [routerLinkActiveOptions]="{ paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }">
@@ -25,14 +15,10 @@
     </span>
     <span class="nav-arrow">
       <fa-icon [icon]="chevronRight"></fa-icon>
-      <!-- @if (isOpen(section.base)) {
-      <fa-icon [icon]="chevronDown"></fa-icon>
-      } @else {
-      } -->
+
     </span>
   </div>
 
-  <!-- Submenú -->
   <div class="submenu" [class.open]="isOpen(section.base)">
     @for (link of section.links; track link.path) {
     <a class="sub-link" [routerLink]="link.path" routerLinkActive="active">

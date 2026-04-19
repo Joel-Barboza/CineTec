@@ -1,4 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
+
+interface Protagonista {
+  nombre: string;
+  apellido: string;
+}
+
+interface Movie {
+  nombreOriginal: string;
+  nombreComercial: string;
+  imageUrl: string;
+  duracion: number;
+  protagonistas: Protagonista[];
+  director: string;
+  clasificacion: string;
+}
 
 @Component({
   selector: 'app-peliculas-insertar',
@@ -8,35 +23,95 @@ import { Component, signal } from '@angular/core';
 export class PeliculasInsertar {
 
 
-  movieName = signal("");
+  nombreOriginal = signal("");
+  nombreComercial = signal("");
+  imageUrl = signal("");
+  duracion = signal<number | null>(null);
+  director = signal("");
+  clasificacion = signal("");
+  submitted = signal(false);
 
-  updateMovieName(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.movieName.set(input.value);
+  protagonistas = signal<Protagonista[]>([]);
+
+  nuevoNombre = signal("");
+  nuevoApellido = signal("");
+
+  updateSignal(event: Event, setter: (value: any) => void) {
+    const target = event.target as HTMLInputElement | HTMLSelectElement;
+    setter(target.value);
+  }
+
+
+
+  isFormValid = computed(() => {
+    return (
+      this.nombreOriginal().trim() !== "" &&
+      this.nombreComercial().trim() !== "" &&
+      this.imageUrl().trim() !== "" &&
+      this.duracion() !== null &&
+      this.duracion()! > 0 &&
+      this.director().trim() !== "" &&
+      this.clasificacion().trim() !== "" &&
+      this.protagonistas().length > 0
+    );
+  });
+
+  addProtagonista() {
+    if (!this.nuevoNombre() || !this.nuevoApellido()) return;
+
+    this.protagonistas.update(list => [
+      ...list,
+      {
+        nombre: this.nuevoNombre(),
+        apellido: this.nuevoApellido()
+      }
+    ]);
+
+    this.nuevoNombre.set("");
+    this.nuevoApellido.set("");
+  }
+
+  removeProtagonista(index: number) {
+    this.protagonistas.update(list => list.filter((_, i) => i !== index));
   }
 
   async sendMovie() {
+
+    this.submitted.set(true);
+
+    if (!this.isFormValid()) return;
+
     try {
       const response = await fetch("/api/Movies", {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
         },
-        body: JSON.stringify(this.movieName())
+        body: JSON.stringify(this.nombreOriginal())
       });
 
-      if (!response.ok) {
-        throw new Error("No hubo respuesta del servidor");
-      }
+      if (!response.ok) throw new Error("Error del servidor");
 
-      const data = await response.json();
-
-      return data;
+      await response.json();
+      alert("Enviado");
+      this.resetValues();
+      return;
 
     } catch (error) {
-      console.error("Error al enviar películas al servidor:", error);
-      throw error;
+      console.error("Error:", error);
     }
+  }
+
+  resetValues() {
+    this.nombreOriginal.set("");
+    this.nombreComercial.set("");
+    this.imageUrl.set("");
+    this.duracion.set(null);
+    this.director.set("");
+    this.clasificacion.set("");
+    this.submitted.set(false);
+
+    this.protagonistas.set([]);
   }
 
 }
