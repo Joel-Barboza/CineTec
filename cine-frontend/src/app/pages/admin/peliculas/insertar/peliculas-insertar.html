@@ -1,19 +1,19 @@
 <style>
   .page {
-    max-width: 560px;
     margin: 40px auto;
     padding: 0 16px;
     font-family: sans-serif;
   }
-
+  
   h1 {
     font-size: 18px;
     font-weight: 600;
     margin: 0 0 12px;
     color: #111;
   }
-
+  
   .card {
+    max-width: 560px;
     background: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 10px;
@@ -80,32 +80,15 @@
   li:last-child {
     border-bottom: none;
   }
+
   p {
     color: red
   }
 </style>
 
-<div class="page">
-  <div [hidden]="loginSuccess()" class="card">
-    <h1>Autentificarse</h1>
-    <label>Usuario</label>
-    <input [value]="userValue()" (input)="updateUsernameValue($event)" placeholder="Admin" />
-    <label>Contraseña</label>
-    <input type="password" [value]="passwordValue()" (input)="updatePasswordValue($event)" placeholder="Contraseña" />
-    <p [hidden]="loginSuccess() == null || loginSuccess()">Usuario o Contraseña incorrectos</p>
-    <button [disabled]="!userValue() || !passwordValue()" (click)="authAdmin()">
-      Enviar
-    </button>
-  </div>
-
-
-  <button [hidden]="!loginSuccess()" (click)="logout()">Cerrar Sesión</button>
-  <div class="card" [hidden]="!loginSuccess()" >
-    <h1>Agregar Película</h1>
-    <label>Nombre</label>
-    <input [value]="movieName()" (input)="updateMovieName($event)" placeholder="Ej: Barbie" />
-    <button (click)="sendMovie()">Enviar</button>
-  </div>
-
-
+<div class="card">
+  <h1>Agregar Película</h1>
+  <label>Nombre</label>
+  <input [value]="movieName()" (input)="updateMovieName($event)" placeholder="Ej: Barbie" />
+  <button (click)="sendMovie()">Enviar</button>
 </div>
