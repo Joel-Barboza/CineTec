@@ -1,0 +1,32 @@
+<div id="sidebar">
+
+  <div class="sidebar-brand">
+    CINE<span>TEC</span>
+  </div>
+
+  <div class="sidebar-section-label">Gestión</div>
+
+  @for (section of sections; track section.base) {
+  <div class="nav-parent" [class.open]="isOpen(section.base)" [class.active-parent]="rla.isActive"
+    (click)="toggle(section.base)" routerLinkActive #rla="routerLinkActive"
+    [routerLinkActiveOptions]="{ paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' }">
+    <span class="nav-parent-left">
+      <span><fa-icon [icon]="section.icon" /></span> {{ section.label }}
+    </span>
+    <span class="nav-arrow">
+      <fa-icon [icon]="chevronRight"></fa-icon>
+
+    </span>
+  </div>
+
+  <div class="submenu" [class.open]="isOpen(section.base)">
+    @for (link of section.links; track link.path) {
+    <a class="sub-link" [routerLink]="link.path" routerLinkActive="active">
+      {{ link.label }}
+    </a>
+    }
+  </div>
+  }
+  <button (click)="logout()">Cerrar Sesión</button>
+
+</div>

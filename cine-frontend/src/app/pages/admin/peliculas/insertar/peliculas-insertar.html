@@ -1,0 +1,159 @@
+<div class="page">
+  <h1>Agregar Película</h1>
+
+  <div class="layout">
+    <section class="card">
+      <h2>Información General</h2>
+
+      <div class="form-group">
+        <label>Nombre Original</label>
+        <input [value]="nombreOriginal()" (input)="updateSignal($event, nombreOriginal.set)" />
+      </div>
+
+      <div class="form-group">
+        <label>Nombre Comercial</label>
+        <input [value]="nombreComercial()" (input)="updateSignal($event, nombreComercial.set)" />
+      </div>
+
+      <div class="form-group">
+        <label>URL de imagen</label>
+        <input [value]="imageUrl()" (input)="updateSignal($event, imageUrl.set)" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Duración (min)</label>
+          <input type="number" [value]="duracion()" (input)="updateSignal($event, duracion.set)" />
+        </div>
+
+        <div class="form-group">
+          <label>Clasificación</label>
+          <select [value]="clasificacion()" (change)="updateSignal($event, clasificacion.set)">
+            <option value="TP">TP</option>
+            <option value="+7">+7</option>
+            <option value="+12">+12</option>
+            <option value="+15">+15</option>
+            <option value="+18">+18</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Director</label>
+        <input [value]="director()" (input)="updateSignal($event, director.set)" />
+      </div>
+      <button class="primary" (click)="sendMovie()">
+        Guardar Película
+      </button>
+      @if (submitted() && !isFormValid()) {
+      <p class="error">
+        Todos los campos son obligatorios y debes agregar al menos un protagonista.
+      </p>
+      }
+    </section>
+
+    <section class="card">
+      <h2>Protagonistas</h2>
+      <div class="form-row">
+        <input placeholder="Nombre" [value]="nuevoNombre()" (input)="updateSignal($event, nuevoNombre.set)" />
+        <input placeholder="Apellido" [value]="nuevoApellido()" (input)="updateSignal($event, nuevoApellido.set)" />
+        <button (click)="addProtagonista()">Agregar</button>
+      </div>
+
+      <ul class="list">
+        @for (p of protagonistas(); track $index) {
+        <li class="list-item">
+          <span>{{ p.nombre }} {{ p.apellido }}</span>
+          <button class="danger" (click)="removeProtagonista($index)">Eliminar</button>
+        </li>
+        }
+      </ul>
+    </section>
+  </div>
+</div>
+
+<style>
+  .page {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+    font-family: sans-serif;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+
+  button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+
+  button.primary {
+    background: #111;
+    color: white;
+    width: 100%;
+  }
+
+  button.danger {
+    background: #e53935;
+    color: white;
+  }
+
+  .list {
+    margin-top: 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .error {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+</style>

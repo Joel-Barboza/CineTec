@@ -11,12 +11,12 @@ type Movie = {
 }
 
 @Component({
-  selector: 'app-movies',
-  imports: [],
-  templateUrl: './movies-page.html',
+  selector: 'app-peliculas-consultar',
+  standalone: true,
+  templateUrl: './peliculas-consultar.html',
 })
-export class MoviesPage {
-  movieList = signal<Movie[]>([]);
+export class PeliculasConsultar {
+    movieList = signal<Movie[]>([]);
 
 
   async getAllMovies() {
@@ -33,5 +33,4 @@ export class MoviesPage {
       throw error;
     }
   }
-
 }
