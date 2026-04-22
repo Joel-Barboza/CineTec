@@ -20,17 +20,17 @@ namespace CineTec.Services
             return _repository.GetAll();
         }
 
-        public void AddMovie(string movieName)
+        public void AddMovie(string[] movieDetails)
         {
             // por ahora solo se obtiene el nombre desde la pagina, el resto es por defecto
             var movie = new Movie(
-                movieName,
-                movieName + "eishon",
+                movieDetails[0],
+                movieDetails[0] + "eishon",
                 "url",
                 120,
                 new List<string> { "prota1", "prota2" },
                 "director",
-                "todo publico"
+                movieDetails[1]
             );
 
             _repository.Add(movie);

@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [Navbar, RouterOutlet],
+  imports: [RouterOutlet],
   templateUrl: './main-layout.html',
 })
 export class MainLayout {}

@@ -1,0 +1,94 @@
+<div class="container-fluid py-4">
+
+  <div class="mb-4">
+    <h1 class="h4 fw-semibold mb-0">Eliminar Película</h1>
+    <span class="text-muted small">Selecciona una película de la lista para eliminarla</span>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-md-5">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+          <h6 class="fw-semibold mb-0">Películas</h6>
+        </div>
+        <div class="list-group list-group-flush" style="max-height: 70vh; overflow-y: auto;">
+          @for (movie of movieList(); track movie.originalName) {
+          <button type="button"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            [class.active]="selected()?.originalName === movie.originalName" (click)="select(movie)">
+            <div>
+              <div class="fw-medium">{{ movie.originalName }}</div>
+              <div class="small opacity-75">{{ movie.commercialName }}</div>
+            </div>
+            <span class="badge text-bg-secondary">{{ movie.rating }}</span>
+          </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      @if (selected(); as movie) {
+      <div class="card border-0 shadow-sm border-danger" style="border-left: 4px solid #dc3545 !important;">
+        <div class="card-body p-4">
+
+          <h6 class="fw-semibold mb-3">¿Eliminar esta película?</h6>
+
+          <table class="table table-sm table-borderless mb-4">
+            <tbody>
+              <tr>
+                <td class="text-muted" style="width: 40%">Nombre original</td>
+                <td class="fw-medium">{{ movie.originalName }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Nombre comercial</td>
+                <td>{{ movie.commercialName }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Director</td>
+                <td>{{ movie.director }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Duración</td>
+                <td>{{ movie.duration }} min</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Clasificación</td>
+                <td><span class="badge text-bg-secondary">{{ movie.rating }}</span></td>
+              </tr>
+              <tr>
+                <td class="text-muted">Protagonistas</td>
+                <td>
+                  <div class="d-flex flex-wrap gap-1">
+                    @for (actor of movie.mainActors; track actor) {
+                    <span class="badge text-bg-light border">{{ actor }}</span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex gap-2">
+            <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+            <button class="btn btn-outline-secondary" (click)="selected.set(null)">Cancelar</button>
+          </div>
+
+          @if (deleted()) {
+          <div class="alert alert-success d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+            <span>✓</span> Película eliminada <span class="text-muted small">(prototipo)</span>
+          </div>
+          }
+
+        </div>
+      </div>
+      } @else {
+      <div class="text-center text-muted py-5">
+        <p class="mt-2">Selecciona una película de la lista</p>
+      </div>
+      }
+    </div>
+
+  </div>
+</div>

@@ -23,9 +23,9 @@ namespace CineTec.Controllers
 
         // los cambios se ven en C:\inetpub\CineTec\DataFiles\movies.json no en el de visual studio
         [HttpPost] // de frontend a backend
-        public IActionResult Add([FromBody] string movieName)
+        public IActionResult Add([FromBody] string[] movieDetails)
         {
-            _service.AddMovie(movieName);
+            _service.AddMovie(movieDetails);
             return Ok(true);
         }
     }
