@@ -1,159 +1,129 @@
-<div class="page">
-  <h1>Agregar Película</h1>
+<div class="container-fluid py-4">
 
-  <div class="layout">
-    <section class="card">
-      <h2>Información General</h2>
-
-      <div class="form-group">
-        <label>Nombre Original</label>
-        <input [value]="nombreOriginal()" (input)="updateSignal($event, nombreOriginal.set)" />
-      </div>
-
-      <div class="form-group">
-        <label>Nombre Comercial</label>
-        <input [value]="nombreComercial()" (input)="updateSignal($event, nombreComercial.set)" />
-      </div>
-
-      <div class="form-group">
-        <label>URL de imagen</label>
-        <input [value]="imageUrl()" (input)="updateSignal($event, imageUrl.set)" />
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Duración (min)</label>
-          <input type="number" [value]="duracion()" (input)="updateSignal($event, duracion.set)" />
-        </div>
-
-        <div class="form-group">
-          <label>Clasificación</label>
-          <select [value]="clasificacion()" (change)="updateSignal($event, clasificacion.set)">
-            <option value="TP">TP</option>
-            <option value="+7">+7</option>
-            <option value="+12">+12</option>
-            <option value="+15">+15</option>
-            <option value="+18">+18</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Director</label>
-        <input [value]="director()" (input)="updateSignal($event, director.set)" />
-      </div>
-      <button class="primary" (click)="sendMovie()">
-        Guardar Película
-      </button>
-      @if (submitted() && !isFormValid()) {
-      <p class="error">
-        Todos los campos son obligatorios y debes agregar al menos un protagonista.
-      </p>
-      }
-    </section>
-
-    <section class="card">
-      <h2>Protagonistas</h2>
-      <div class="form-row">
-        <input placeholder="Nombre" [value]="nuevoNombre()" (input)="updateSignal($event, nuevoNombre.set)" />
-        <input placeholder="Apellido" [value]="nuevoApellido()" (input)="updateSignal($event, nuevoApellido.set)" />
-        <button (click)="addProtagonista()">Agregar</button>
-      </div>
-
-      <ul class="list">
-        @for (p of protagonistas(); track $index) {
-        <li class="list-item">
-          <span>{{ p.nombre }} {{ p.apellido }}</span>
-          <button class="danger" (click)="removeProtagonista($index)">Eliminar</button>
-        </li>
-        }
-      </ul>
-    </section>
+  <div class="mb-4">
+    <h1 class="h4 fw-semibold mb-0">Agregar Película</h1>
+    <span class="text-muted small">Completa todos los campos para registrar una nueva película</span>
   </div>
-</div>
 
-<style>
-  .page {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 16px;
-    font-family: sans-serif;
-  }
+  <div class="row g-4">
 
-  .layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+          <h6 class="fw-semibold mb-0">Información General</h6>
+        </div>
+        <div class="card-body">
 
-  .card {
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    padding: 20px;
-  }
+          <div class="mb-3">
+            <label class="form-label">Nombre Original</label>
+            <input class="form-control" [class.is-invalid]="submitted() && !nombreOriginal().trim()"
+              [value]="nombreOriginal()" (input)="updateSignal($event, nombreOriginal.set)" />
+          </div>
 
-  h1 {
-    margin-bottom: 20px;
-  }
+          <div class="mb-3">
+            <label class="form-label">Nombre Comercial</label>
+            <input class="form-control" [class.is-invalid]="submitted() && !nombreComercial().trim()"
+              [value]="nombreComercial()" (input)="updateSignal($event, nombreComercial.set)" />
+          </div>
 
-  h2 {
-    font-size: 16px;
-    margin-bottom: 16px;
-  }
+          <div class="mb-3">
+            <label class="form-label">URL de imagen</label>
+            <input class="form-control" [class.is-invalid]="submitted() && !imageUrl().trim()" [value]="imageUrl()"
+              (input)="updateSignal($event, imageUrl.set)" />
+          </div>
 
-  .form-group {
-    margin-bottom: 14px;
-  }
+          <div class="row g-3 mb-3">
+            <div class="col-6">
+              <label class="form-label">Duración (min)</label>
+              <input type="number" class="form-control" [class.is-invalid]="submitted() && !duracion()"
+                [value]="duracion()" (input)="updateSignal($event, duracion.set)" />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Clasificación</label>
+              <select class="form-select" [class.is-invalid]="submitted() && !clasificacion()" [value]="clasificacion()"
+                (change)="updateSignal($event, clasificacion.set)">
+                <option value="">Seleccionar</option>
+                <option value="TP">TP</option>
+                <option value="+7">+7</option>
+                <option value="+12">+12</option>
+                <option value="+15">+15</option>
+                <option value="+18">+18</option>
+              </select>
+            </div>
+          </div>
 
-  .form-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
+          <div class="mb-4">
+            <label class="form-label">Director</label>
+            <input class="form-control" [class.is-invalid]="submitted() && !director().trim()" [value]="director()"
+              (input)="updateSignal($event, director.set)" />
+          </div>
 
-  input,
-  select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-  }
+          <button class="btn btn-dark w-100" (click)="sendMovie()" [disabled]="loading()">
+            @if (loading()) {
+            <span class="spinner-border spinner-border-sm me-1"></span> Guardando...
+            } @else {
+            Guardar Película
+            }
+          </button>
 
-  button {
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-  }
+          @if (submitted() && !isFormValid()) {
+          <div class="alert alert-danger d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+            Todos los campos son obligatorios y debes agregar al menos un protagonista.
+          </div>
+          }
 
-  button.primary {
-    background: #111;
-    color: white;
-    width: 100%;
-  }
+          @if (success()) {
+          <div class="alert alert-success d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+            Película guardada correctamente.
+          </div>
+          }
 
-  button.danger {
-    background: #e53935;
-    color: white;
-  }
+          @if (serverError()) {
+          <div class="alert alert-danger d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+            <span>✕</span> {{ serverError() }}
+          </div>
+          }
 
-  .list {
-    margin-top: 10px;
-    padding: 0;
-    list-style: none;
-  }
+        </div>
+      </div>
+    </div>
 
-  .list-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-  }
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between">
+          <h6 class="fw-semibold mb-0">Protagonistas</h6>
+          <span class="badge text-bg-secondary">{{ protagonistas().length }}</span>
+        </div>
+        <div class="card-body">
 
-  .error {
-    color: #e53935;
-    font-size: 12px;
-    margin-top: 4px;
-  }
-</style>
+          <div class="input-group mb-3">
+            <input class="form-control" placeholder="Nombre" [value]="nuevoNombre()"
+              (input)="updateSignal($event, nuevoNombre.set)" (keydown.enter)="addProtagonista()" />
+            <input class="form-control" placeholder="Apellido" [value]="nuevoApellido()"
+              (input)="updateSignal($event, nuevoApellido.set)" (keydown.enter)="addProtagonista()" />
+            <button class="btn btn-dark" (click)="addProtagonista()">Agregar</button>
+          </div>
+
+          @if (submitted() && protagonistas().length === 0) {
+          <div class="alert alert-danger py-2 small mb-3">
+            Agrega al menos un protagonista.
+          </div>
+          }
+
+          <ul class="list-group list-group-flush">
+            @for (p of protagonistas(); track $index) {
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <span>{{ p.nombre }} {{ p.apellido }}</span>
+              <button class="btn btn-outline-danger btn-sm" (click)="removeProtagonista($index)">Eliminar</button>
+            </li>
+            } @empty {
+            <li class="list-group-item px-0 text-muted small">No hay protagonistas agregados.</li>
+            }
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>>

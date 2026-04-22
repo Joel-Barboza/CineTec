@@ -1,0 +1,246 @@
+<div class="client-wrap">
+
+  <div class="sidebar">
+    <div class="sidebar-brand">Cine<span>TEC</span></div>
+    <div class="sidebar-section-label">Menú</div>
+
+    <a class="nav-link-single" (click)="tickets()">
+      <fa-icon [icon]="ticketIcon"></fa-icon>
+      Boletería
+    </a>
+
+    <a class="nav-link-single" (click)="movieListing()">
+      <fa-icon [icon]="filmIcon"></fa-icon>
+      Cartelera
+    </a>
+    <a class="nav-link-single" (click)="goToAdmin()">
+      <fa-icon [icon]="adminIcon"></fa-icon>
+      Admin
+    </a>
+  </div>
+
+  <div class="client-main">
+
+    @if (!onMovieListing()) {
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span [class.link]="step()>0" (click)="goToStep(0)">Inicio</span>
+
+        @if (step() >= 1) {
+        <span class="sep"> › </span>
+        <span [class.link]="step()>1" (click)="goToStep(1)">Cartelera</span>
+        }
+
+        @if (step() >= 2) {
+        <span class="sep"> › </span>
+        <span [class.link]="step()>2" (click)="goToStep(2)">Proyecciones</span>
+        }
+
+        @if (step() >= 3) {
+        <span class="sep"> › </span>
+        <span [class.link]="step()>3" (click)="goToStep(3)">Asientos</span>
+        }
+
+        @if (step() >= 4) {
+        <span class="sep"> › </span>
+        <span>Factura</span>
+        }
+      </div>
+
+      <div class="topbar-user">Cliente: Juan Pérez</div>
+    </div>
+    }
+
+    <div class="client-content">
+
+      @if (!onMovieListing()) {
+      <div class="steps-bar">
+        @for (label of ['Cine','Película','Proyección','Asientos','Factura']; track $index; let i = $index) {
+        <div class="step" [class.done]="i < step()" [class.active]="i === step()">
+          <div class="step-num">
+            @if (i < step()) { <fa-icon [icon]="checkIcon"></fa-icon> } @else { {{i + 1}} }
+              <!-- {{ i < step() ? '✓' : i + 1 }} -->
+          </div>
+          <div class="step-label">{{ label }}</div>
+        </div>
+
+        @if (i < 4) { <div class="step-line" [class.done]="i < step()">
+      </div>
+      }
+      }
+    </div>
+
+
+    @if (step() === 0) {
+    <div class="section-header">
+      <h2>Seleccionar cine</h2>
+      <p>Elegí la sucursal de tu preferencia</p>
+    </div>
+
+    <div class="card-grid">
+      @for (c of cinemas; track c.name) {
+      <div class="cinema-card" [class.selected]="selectedCinema() === c.name" (click)="selectCinema(c.name)">
+        <div class="cinema-icon">
+          <fa-icon [icon]="videoIcon" class="icon"></fa-icon>
+        </div>
+        <div class="cinema-name">{{ c.name }}</div>
+        <div class="cinema-loc">{{ c.loc }}</div>
+      </div>
+      }
+    </div>
+    }
+
+    @if (step() === 1) {
+    <div class="section-header">
+      <h2>Cartelera</h2>
+      <p>{{ selectedCinema() }} — Películas en cartelera</p>
+    </div>
+
+    @if (loadingMovies()) {
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+    } @else {
+    <div class="movies-grid">
+      @for (m of movies(); track m) {
+      <div class="movie-card" [class.selected]="selectedMovie() === m" (click)="selectMovie(m)">
+        <div class="movie-poster">{{ posterInitials(m.commercialName) }}</div>
+        <div class="movie-info">
+          <div class="movie-title">{{ m.commercialName }}</div>
+          <div class="movie-meta">{{ m.duration }} min · {{ m.director }}</div>
+          <span class="badge">{{ m.rating }}</span>
+        </div>
+      </div>
+      }
+    </div>
+    }
+    }
+
+    @if (step() === 2) {
+    <div class="section-header">
+      <h2>Proyecciones: {{ selectedMovie()?.commercialName }}</h2>
+      <p>Seleccioná el horario</p>
+    </div>
+
+    <div class="proj-list">
+      @for (p of projections; track p.time) {
+      <div class="proj-item" [class.selected]="selectedProj()?.time === p.time" (click)="selectProj(p)">
+        <div>
+          <div class="proj-time">{{ p.time }}</div>
+          <div class="proj-detail">{{ p.sala }} · Hoy</div>
+        </div>
+        <div class="proj-avail">{{ p.avail }} disponibles</div>
+      </div>
+      }
+    </div>
+    }
+
+    @if (step() === 3) {
+    <div class="section-header">
+      <h2>Seleccionar asientos</h2>
+    </div>
+
+    <div class="seat-screen">— Pantalla —</div>
+
+    <div class="seat-grid">
+      @for (row of ROWS; track row) {
+      <div class="seat-row">
+        <div class="row-label">{{ row }}</div>
+
+        @for (col of COLS; track col) {
+        <div class="seat" [class]="'seat ' + seatState(row + col)" (click)="toggleSeat(row + col)">
+          {{ col }}
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+
+    @if (step() === 4) {
+    <div class="factura-card">
+
+      <div class="factura-header">
+        <div class="factura-logo">Cine<span>TEC</span></div>
+        <div class="factura-num">Factura #{{ facturaNum() }}</div>
+        <div class="factura-fecha">{{ facturaFecha() }}</div>
+      </div>
+
+      <div class="factura-row"><span>Cine</span><span>{{ selectedCinema() }}</span></div>
+      <div class="factura-row"><span>Película</span><span>{{ selectedMovie()?.commercialName }}</span></div>
+      <div class="factura-row"><span>Proyección</span><span>{{ selectedProj()?.time }} — {{ selectedProj()?.sala
+          }}</span></div>
+      <div class="factura-row"><span>Asientos</span><span>{{ selectedSeats().join(', ') }}</span></div>
+      <div class="factura-row"><span>Cantidad</span><span>{{ selectedSeats().length }}</span></div>
+      <div class="factura-row"><span>Precio unitario</span><span>₡{{ TICKET_PRICE.toLocaleString('es-CR') }}</span>
+      </div>
+      <div class="factura-row"><span>Subtotal</span><span>₡{{ subtotal().toLocaleString('es-CR') }}</span></div>
+      <div class="factura-row"><span>IVA (13%)</span><span>₡{{ iva().toLocaleString('es-CR') }}</span></div>
+
+      <div class="factura-total">
+        <span>Total</span>
+        <span>₡{{ totalPrice().toLocaleString('es-CR') }}</span>
+      </div>
+
+      <div class="factura-actions">
+
+        <!-- PDF -->
+        <button class="btn-primary" (click)="downloadPDF()" [disabled]="pdfSent()">
+          @if (pdfSent()) { PDF descargado } @else { Descargar PDF }
+        </button>
+
+
+      </div>
+
+    </div>
+    }
+    }
+
+    @if (onMovieListing()) {
+    <div class="section-header">
+      <h2>Cartelera</h2>
+      <!-- <p>{{ selectedCinema() }} — Películas en cartelera</p> -->
+    </div>
+
+    @if (loadingMovies()) {
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+    } @else {
+    <div class="movies-grid">
+      @for (m of movies(); track m) {
+      <div class="movie-card">
+        <div class="movie-poster">{{ posterInitials(m.commercialName) }}</div>
+        <div class="movie-info">
+          <div class="movie-title">{{ m.commercialName }}</div>
+          <div class="movie-meta">{{ m.duration }} min · {{ m.director }}</div>
+          <span class="badge">{{ m.rating }}</span>
+        </div>
+      </div>
+      }
+    </div>
+    }
+    }
+
+
+  </div>
+
+  @if (!onMovieListing()) {
+
+  <div class="summary-bar">
+    <div class="summary-text">{{ summaryText() }}</div>
+
+    <div class="summary-actions">
+      @if (step() > 0 && step() < 4) { <button class="btn-sec" (click)="back()">Atrás</button>
+        }
+
+        @if (step() < 4) { <button class="btn-primary" [disabled]="!canNext()" (click)="next()">
+          {{ ['Siguiente','Ver proyecciones','Elegir asientos','Confirmar reservación'][step()] }}
+          </button>
+          }
+    </div>
+  </div>
+  }
+
+</div>
+</div>

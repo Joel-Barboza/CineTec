@@ -16,22 +16,23 @@ type Movie = {
   templateUrl: './movies-page.html',
 })
 export class MoviesPage {
-  movieList = signal<Movie[]>([]);
+  movies = signal<Movie[]>([]);
+  loadingMovies = signal(false);
 
+  posterInitials(name: string) {
+    return name.substring(0, 2).toUpperCase();
+  }
 
-  async getAllMovies() {
+    async getAllMovies() {
+    this.loadingMovies.set(true);
     try {
-      const response = await fetch("/api/Movies");
-      if (!response.ok) {
-        throw new Error("Failed to fetch movies");
-      }
-      const data = await response.json();
-      this.movieList.set(data);
-      return;
-    } catch (error) {
-      console.error("Error getting movies:", error);
-      throw error;
+      const res = await fetch('/api/Movies');
+      const data = await res.json();
+      this.movies.set(data);
+    } catch (e) {
+      console.error(e);
     }
+    this.loadingMovies.set(false);
   }
 
 }
