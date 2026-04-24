@@ -1,0 +1,30 @@
+<div>
+  <h2>Lista de Sucursales</h2>
+  
+  <div *ngIf="error()">
+    <p style="color: red;">{{ error() }}</p>
+  </div>
+
+  <div *ngIf="loading()">
+    <p>Cargando...</p>
+  </div>
+
+  <div *ngIf="!loading() && !error()">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre del Cine</th>
+          <th>Ubicación</th>
+          <th>Cantidad de Salas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sucursal of sucursales()">
+          <td>{{ sucursal.nombreCine }}</td>
+          <td>{{ sucursal.ubicacion }}</td>
+          <td>{{ sucursal.cantidadSalas }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div>
+  <h2>Eliminar Sucursal</h2>
+
+  <div *ngIf="error()">
+    <p style="color: red;">{{ error() }}</p>
+  </div>
+
+  <div *ngIf="loading()">
+    <p>Cargando...</p>
+  </div>
+
+  <div *ngIf="!loading() && !error()">
+    <h3>Seleccione una sucursal para eliminar</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre del Cine</th>
+          <th>Ubicación</th>
+          <th>Cantidad de Salas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sucursal of sucursales()" (click)="selectSucursal(sucursal)">
+          <td>{{ sucursal.nombreCine }}</td>
+          <td>{{ sucursal.ubicacion }}</td>
+          <td>{{ sucursal.cantidadSalas }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteSucursal(sucursal.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading() && sucursales().length === 0">
+    <p>No hay sucursales para eliminar</p>
+  </div>
+</div>
