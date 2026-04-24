@@ -1,0 +1,64 @@
+<div class="container-fluid py-4">
+
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+      <h1 class="h4 fw-semibold mb-0">Proyecciones</h1>
+      <span class="text-muted small">{{ proyecciones().length }} proyecciones registradas</span>
+    </div>
+    <button class="btn btn-dark btn-sm" (click)="getProyecciones()" [disabled]="loading()">
+      @if (loading()) {
+        <span class="spinner-border spinner-border-sm me-1"></span> Cargando...
+      } @else {
+        Actualizar
+      }
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      {{ error() }}
+      <button type="button" class="btn-close" (click)="error.set(null)"></button>
+    </div>
+  }
+
+  @if (!loading() && proyecciones().length === 0 && !error()) {
+    <div class="text-center py-5 text-muted">
+      <p class="mt-2 mb-0">No hay proyecciones registradas.</p>
+      <button class="btn btn-dark btn-sm mt-3" (click)="getProyecciones()">Cargar proyecciones</button>
+    </div>
+  }
+
+  @if (proyecciones().length > 0) {
+    <div class="card border-0 shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-3" style="width:40px">#</th>
+              <th>Película</th>
+              <th>Sucursal</th>
+              <th>Sala</th>
+              <th>Fecha y hora de inicio</th>
+              <th>Fecha y hora de fin</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (proyeccion of proyecciones(); track proyeccion.id; let i = $index) {
+              <tr>
+                <td class="ps-3 text-muted small">{{ i + 1 }}</td>
+                <td class="fw-medium">{{ proyeccion.pelicula }}</td>
+                <td>{{ proyeccion.sucursal }}</td>
+                <td>
+                  <span class="badge text-bg-secondary">Sala {{ proyeccion.sala }}</span>
+                </td>
+                <td class="text-nowrap">{{ proyeccion.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td class="text-nowrap">{{ proyeccion.fechaHoraFin | date:'dd/MM/yyyy HH:mm' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+</div>

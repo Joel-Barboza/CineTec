@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "nombreSucursal": "CineX",
+    "cantidadFilas": 10,
+    "cantidadColumnas": 15,
+    "capacidad": 150
+  },
+  {
+    "id": "2",
+    "nombreSucursal": "CineY",
+    "cantidadFilas": 8,
+    "cantidadColumnas": 12,
+    "capacidad": 96
+  },
+  {
+    "id": "3",
+    "nombreSucursal": "CineZ",
+    "cantidadFilas": 12,
+    "cantidadColumnas": 18,
+    "capacidad": 216
+  }
+]
