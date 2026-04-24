@@ -1,0 +1,38 @@
+<div>
+  <h2>Lista de Salas</h2>
+  
+  <div *ngIf="error()">
+    <p style="color: red;">{{ error() }}</p>
+  </div>
+
+  <div *ngIf="loading()">
+    <p>Cargando...</p>
+  </div>
+
+  <div *ngIf="!loading() && !error()">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre de la Sucursal</th>
+          <th>Cantidad de Filas</th>
+          <th>Cantidad de Columnas</th>
+          <th>Capacidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sala of salas()">
+          <td>{{ sala.id }}</td>
+          <td>{{ sala.nombreSucursal }}</td>
+          <td>{{ sala.cantidadFilas }}</td>
+          <td>{{ sala.cantidadColumnas }}</td>
+          <td>{{ sala.capacidad }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading() && salas().length === 0">
+    <p>No hay salas disponibles.</p>
+  </div>
+</div>
