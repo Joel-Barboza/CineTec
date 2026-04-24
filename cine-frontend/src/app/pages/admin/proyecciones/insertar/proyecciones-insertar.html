@@ -1,0 +1,142 @@
+<div class="container-fluid py-4">
+
+  <div class="mb-4">
+    <h1 class="h4 fw-semibold mb-0">Agregar Proyección</h1>
+    <span class="text-muted small">Completa todos los campos para registrar una nueva proyección</span>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+          <h6 class="fw-semibold mb-0">Información de la Proyección</h6>
+        </div>
+        <div class="card-body">
+
+          <div class="mb-3">
+            <label class="form-label">Película</label>
+            <input class="form-control" placeholder="Nombre o ID de la película"
+              [class.is-invalid]="submitted() && !pelicula().trim()"
+              [value]="pelicula()"
+              (input)="updateSignal($event, pelicula.set)" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sucursal</label>
+            <input class="form-control" placeholder="Nombre de la sucursal"
+              [class.is-invalid]="submitted() && !sucursal().trim()"
+              [value]="sucursal()"
+              (input)="updateSignal($event, sucursal.set)" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sala</label>
+            <input type="number" class="form-control" placeholder="Número de sala" min="1"
+              [class.is-invalid]="submitted() && (!sala() || sala()! < 1)"
+              [value]="sala()"
+              (input)="sala.set(+$any($event.target).value)" />
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-6">
+              <label class="form-label">Fecha y hora de inicio</label>
+              <input type="datetime-local" class="form-control"
+                [class.is-invalid]="submitted() && !fechaHoraInicio()"
+                [value]="fechaHoraInicio()"
+                (input)="updateSignal($event, fechaHoraInicio.set)" />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Fecha y hora de fin</label>
+              <input type="datetime-local" class="form-control"
+                [class.is-invalid]="submitted() && (!fechaHoraFin() || fechaHoraFin() <= fechaHoraInicio())"
+                [value]="fechaHoraFin()"
+                (input)="updateSignal($event, fechaHoraFin.set)" />
+              @if (submitted() && fechaHoraFin() && fechaHoraInicio() && fechaHoraFin() <= fechaHoraInicio()) {
+                <div class="invalid-feedback d-block">La hora de fin debe ser posterior a la de inicio.</div>
+              }
+            </div>
+          </div>
+
+          <button class="btn btn-dark w-100" (click)="sendProyeccion()" [disabled]="loading()">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-1"></span> Guardando...
+            } @else {
+              Guardar Proyección
+            }
+          </button>
+
+          @if (submitted() && !isFormValid()) {
+            <div class="alert alert-danger d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+              Todos los campos son obligatorios y la hora de fin debe ser posterior a la de inicio.
+            </div>
+          }
+
+          @if (conflictError()) {
+            <div class="alert alert-warning d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+              <span>⚠</span>
+              Conflicto de horario: la sala <strong>{{ conflictError()!.sala }}</strong>
+              en <strong>{{ conflictError()!.sucursal }}</strong> ya tiene una proyección
+              de {{ conflictError()!.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }}
+              a {{ conflictError()!.fechaHoraFin | date:'dd/MM/yyyy HH:mm' }}.
+            </div>
+          }
+
+          @if (success()) {
+            <div class="alert alert-success d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+              <span>✓</span> Proyección guardada correctamente.
+            </div>
+          }
+
+          @if (serverError()) {
+            <div class="alert alert-danger d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+              <span>✕</span> {{ serverError() }}
+            </div>
+          }
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+          <h6 class="fw-semibold mb-0">Resumen</h6>
+        </div>
+        <div class="card-body">
+          <table class="table table-sm table-borderless mb-0">
+            <tbody>
+              <tr>
+                <td class="text-muted" style="width:45%">Película</td>
+                <td class="fw-medium">{{ pelicula() || '—' }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Sucursal</td>
+                <td>{{ sucursal() || '—' }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Sala</td>
+                <td>
+                  @if (sala()) {
+                    <span class="badge text-bg-secondary">Sala {{ sala() }}</span>
+                  } @else {
+                    —
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td class="text-muted">Inicio</td>
+                <td class="text-nowrap">{{ fechaHoraInicio() ? (fechaHoraInicio() | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Fin</td>
+                <td class="text-nowrap">{{ fechaHoraFin() ? (fechaHoraFin() | date:'dd/MM/yyyy HH:mm') : '—' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "pelicula": "Inception",
+    "sucursal": "CineX",
+    "sala": 1,
+    "fechaHoraInicio": "2025-06-01T14:00",
+    "fechaHoraFin": "2025-06-01T16:28"
+  },
+  {
+    "id": "2",
+    "pelicula": "Interstellar",
+    "sucursal": "CineX",
+    "sala": 2,
+    "fechaHoraInicio": "2025-06-01T15:00",
+    "fechaHoraFin": "2025-06-01T17:49"
+  },
+  {
+    "id": "3",
+    "pelicula": "The Dark Knight",
+    "sucursal": "CineY",
+    "sala": 1,
+    "fechaHoraInicio": "2025-06-01T18:00",
+    "fechaHoraFin": "2025-06-01T20:32"
+  }
+]
