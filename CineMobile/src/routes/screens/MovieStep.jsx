@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 
 const MovieStep = ({ movies, selectedMovie, setSelectedMovie, styles }) => {
-
   const renderMovie = ({ item }) => (
     <TouchableOpacity
       style={[
@@ -11,32 +10,32 @@ const MovieStep = ({ movies, selectedMovie, setSelectedMovie, styles }) => {
       ]}
       onPress={() => setSelectedMovie(item)}
     >
-      <View style={styles.poster}>
+      <View style={styles.posterBox}>
         <Text style={styles.posterText}>
           {item.CommercialName.slice(0, 2).toUpperCase()}
         </Text>
       </View>
 
-      <Text style={styles.title}>{item.CommercialName}</Text>
-      <Text style={styles.meta}>
-        {item.Duration} min · {item.Director}
-      </Text>
-      <Text style={styles.badge}>{item.Rating}</Text>
+      <View style={styles.movieInfo}>
+        <Text style={styles.title}>{item.CommercialName}</Text>
+        <Text style={styles.meta}>
+          {item.Duration} min · {item.Director}
+        </Text>
+        <Text style={styles.badge}>{item.Rating}</Text>
+      </View>
     </TouchableOpacity>
   );
 
   return (
     <>
       <Text style={styles.header}>Cartelera</Text>
-
       <FlatList
         data={movies}
         renderItem={renderMovie}
         keyExtractor={(_, i) => i.toString()}
-        numColumns={2}
       />
     </>
   );
 };
 
-export default MovieStep;
+export default MovieStep
