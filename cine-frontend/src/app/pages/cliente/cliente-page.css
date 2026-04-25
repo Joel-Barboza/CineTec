@@ -659,3 +659,15 @@
   background: #f8f9fa;
   color: #212529;
 }
+
+.movie-card.highlight {
+  border: 2px solid #ff4d4d;
+  transform: scale(1.02);
+}
+
+.movie-card.highlight .badge {
+  background-color: #ff4d4d;
+}
+.movie-card.highlight {
+  border: 2px solid #ff4d4d;
+}

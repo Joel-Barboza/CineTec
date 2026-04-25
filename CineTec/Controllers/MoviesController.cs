@@ -21,6 +21,19 @@ namespace CineTec.Controllers
             return Ok(movies);
         }
 
+        [HttpGet("latest")]
+        public IActionResult GetLatest()
+        {
+            var movie = _service.GetLatestMovie();
+
+            if (movie == null)
+                return NotFound();
+
+            
+            var latest = movie;
+            return Ok(latest);
+        }
+
         // los cambios se ven en C:\inetpub\CineTec\DataFiles\movies.json no en el de visual studio
         [HttpPost] // de frontend a backend
         public IActionResult Add([FromBody] string[] movieDetails)
@@ -29,4 +42,6 @@ namespace CineTec.Controllers
             return Ok(true);
         }
     }
+
+
 }

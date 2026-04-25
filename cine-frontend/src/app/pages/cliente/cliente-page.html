@@ -219,6 +219,32 @@
       </div>
       }
     </div>
+    <div style="margin: 10px;">
+      <button class="btn-sec" (click)="loadLatestMovie()">
+        Ver película más reciente
+      </button>
+    </div>
+    @if (latestMovie()) {
+    <div class="movies-grid">
+      <div class="movie-card highlight" (click)="selectMovie(latestMovie())">
+
+        <div class="movie-poster">
+          {{ posterInitials(latestMovie().commercialName) }}
+        </div>
+
+        <div class="movie-info">
+          <div class="movie-title">
+            {{ latestMovie().commercialName }}
+          </div>
+          <div class="movie-meta">
+            {{ latestMovie().duration }} min · {{ latestMovie().director }}
+          </div>
+          <span class="badge">Nuevo</span>
+        </div>
+
+      </div>
+    </div>
+    }
     }
     }
 

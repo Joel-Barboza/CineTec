@@ -1,7 +1,7 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { jsPDF } from 'jspdf';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faFilm, faTicket, faUserTie, faVideo } from '@fortawesome/free-solid-svg-icons';
 
@@ -35,6 +35,7 @@ export class ClientePage {
   movies = signal<Movie[]>([]);
   loadingMovies = signal(false);
   onMovieListing = signal(false);
+  latestMovie = signal<any | null>(null);
 
   facturaNum = signal('');
   facturaFecha = signal('');
@@ -108,6 +109,15 @@ export class ClientePage {
 
   goToStep(n: number) {
     if (n < this.step()) this.step.set(n);
+  }
+
+
+  loadLatestMovie() {
+    fetch('/api/Movies/Latest')
+      .then(res => res.json())
+      .then(data => {
+        this.latestMovie.set(data);
+      });
   }
 
   // DATA
@@ -232,7 +242,7 @@ export class ClientePage {
 
     doc.save(`factura-cinetec-${this.facturaNum()}.pdf`);
     this.pdfSent.set(true);
-    setTimeout(() => {this.step.set(0)},2000)
+    setTimeout(() => { this.step.set(0) }, 2000)
   }
 
   posterInitials(name: string) {
@@ -242,7 +252,7 @@ export class ClientePage {
   tickets() {
     this.onMovieListing.set(false);
   }
-  
+
   movieListing() {
     this.onMovieListing.set(true);
     this.getAllMovies();

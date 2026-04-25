@@ -35,5 +35,12 @@ namespace CineTec.Services
 
             _repository.Add(movie);
         }
+
+        public Movie GetLatestMovie()
+        {
+            var movie = _repository.GetLast();
+    
+                return movie;
+        }
     }
 }
