@@ -1,19 +1,19 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { coerceDisplayMode } from 'react-native/types_generated/Libraries/ReactNative/DisplayMode';
 
-const HomeScreen = ({ navigation }) => {
+const SeatsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Home screen</Text>
-
+      <Text style={styles.text}>Seats screen</Text>
       <View style={styles.footer}>
         <Button
-          title="Ir a Sucursales"
-          onPress={() => navigation.navigate('SucursalScreen')}
+          title="Regresar a "
+          onPress={() => navigation.navigate('ProjectionScreen')}
         />
-
       </View>
+
     </SafeAreaView>
   );
 };
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomeScreen;
+export default SeatsScreen;

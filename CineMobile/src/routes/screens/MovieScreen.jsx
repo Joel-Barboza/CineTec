@@ -2,18 +2,21 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HomeScreen = ({ navigation }) => {
+const MovieScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Home screen</Text>
-
+      <Text style={styles.text}>Movie screen</Text>
       <View style={styles.footer}>
         <Button
-          title="Ir a Sucursales"
-          onPress={() => navigation.navigate('SucursalScreen')}
+          title="Regresar a sucursal"
+          onPress={() => navigation.navigate('HomeScreen')}
         />
-
+        <Button
+          title="Ir a Proyeccion"
+          onPress={() => navigation.navigate('ProjectionScreen')}
+        />
       </View>
+
     </SafeAreaView>
   );
 };
@@ -43,4 +46,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomeScreen;
+export default MovieScreen;
