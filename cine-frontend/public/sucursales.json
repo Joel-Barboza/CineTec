@@ -1,0 +1,17 @@
+[
+  {
+    "nombreCine": "CineX",
+    "ubicacion": "UbicaciónX",
+    "cantidadSalas": 5
+  },
+  {
+    "nombreCine": "CineY",
+    "ubicacion": "UbicaciónY",
+    "cantidadSalas": 3
+  },
+  {
+    "nombreCine": "CineZ",
+    "ubicacion": "UbicaciónZ",
+    "cantidadSalas": 4
+  }
+]

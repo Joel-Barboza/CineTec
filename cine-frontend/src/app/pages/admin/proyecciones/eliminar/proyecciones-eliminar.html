@@ -1,0 +1,89 @@
+<div class="container-fluid py-4">
+
+  <div class="mb-4">
+    <h1 class="h4 fw-semibold mb-0">Eliminar Proyección</h1>
+    <span class="text-muted small">Selecciona una proyección de la lista para eliminarla</span>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-md-5">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+          <h6 class="fw-semibold mb-0">Proyecciones</h6>
+        </div>
+        <div class="list-group list-group-flush" style="max-height: 70vh; overflow-y: auto;">
+          @for (proyeccion of proyecciones(); track proyeccion.id) {
+            <button type="button"
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+              [class.active]="selected()?.id === proyeccion.id"
+              (click)="select(proyeccion)">
+              <div>
+                <div class="fw-medium">{{ proyeccion.pelicula }}</div>
+                <div class="small opacity-75">{{ proyeccion.sucursal }} · Sala {{ proyeccion.sala }}</div>
+              </div>
+              <div class="text-end small opacity-75 text-nowrap">
+                {{ proyeccion.fechaHoraInicio | date:'dd/MM HH:mm' }}
+              </div>
+            </button>
+          } @empty {
+            <div class="list-group-item text-muted small">No hay proyecciones registradas.</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      @if (selected(); as proyeccion) {
+        <div class="card border-0 shadow-sm" style="border-left: 4px solid #dc3545 !important;">
+          <div class="card-body p-4">
+
+            <h6 class="fw-semibold mb-3">¿Eliminar esta proyección?</h6>
+
+            <table class="table table-sm table-borderless mb-4">
+              <tbody>
+                <tr>
+                  <td class="text-muted" style="width:40%">Película</td>
+                  <td class="fw-medium">{{ proyeccion.pelicula }}</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Sucursal</td>
+                  <td>{{ proyeccion.sucursal }}</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Sala</td>
+                  <td><span class="badge text-bg-secondary">Sala {{ proyeccion.sala }}</span></td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Fecha y hora de inicio</td>
+                  <td class="text-nowrap">{{ proyeccion.fechaHoraInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Fecha y hora de fin</td>
+                  <td class="text-nowrap">{{ proyeccion.fechaHoraFin | date:'dd/MM/yyyy HH:mm' }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+              <button class="btn btn-outline-secondary" (click)="selected.set(null)">Cancelar</button>
+            </div>
+
+            @if (deleted()) {
+              <div class="alert alert-success d-flex align-items-center gap-2 mt-3 mb-0 py-2">
+                <span>✓</span> Proyección eliminada <span class="text-muted small">(prototipo)</span>
+              </div>
+            }
+
+          </div>
+        </div>
+      } @else {
+        <div class="text-center text-muted py-5">
+          <p class="mt-2">Selecciona una proyección de la lista</p>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

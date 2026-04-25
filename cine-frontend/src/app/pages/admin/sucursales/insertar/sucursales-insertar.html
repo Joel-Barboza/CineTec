@@ -1,0 +1,49 @@
+<div>
+  <h2>Insertar Sucursal</h2>
+  <div *ngIf="serverError()">
+    <p style="color: red;">{{ serverError() }}</p>
+  </div>
+
+  <div *ngIf="loading()">
+    <p>Cargando...</p>
+  </div>
+
+  <div *ngIf="!loading() && !serverError()">
+    <form (ngSubmit)="sendSucursal()">
+      <div>
+        <label for="nombreCine">Nombre del Cine</label>
+        <input
+          type="text"
+          id="nombreCine"
+          [value]="nombreCine()"
+          (input)="nombreCine.set($event.target.value)"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="ubicacion">Ubicación</label>
+        <input
+          type="text"
+          id="ubicacion"
+          [value]="ubicacion()"
+          (input)="ubicacion.set($event.target.value)"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="cantidadSalas">Cantidad de Salas</label>
+        <input
+          type="number"
+          id="cantidadSalas"
+          [value]="cantidadSalas()"
+          (input)="cantidadSalas.set(+($event.target.value))"
+          required
+        />
+      </div>
+
+      <button type="submit" [disabled]="!isFormValid() || loading()">Insertar Sucursal</button>
+    </form>
+  </div>
+</div>
