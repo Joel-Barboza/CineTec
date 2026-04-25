@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen.jsx';
-import SucursalScreen from './screens/SucursalScreen.jsx';
-import MovieScreen from './screens/MovieScreen.jsx';
-import ProjectionScreen from './screens/ProjectionScreen.jsx';
-import SeatsScreen from './screens/SeatsScreen.jsx';
+// import SucursalScreen from './screens/SucursalScreen.jsx';
+// import MovieScreen from './screens/MovieScreen.jsx';
+// import ProjectionScreen from './screens/ProjectionScreen.jsx';
+// import SeatsScreen from './screens/SeatsScreen.jsx';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,7 @@ const TicketStack = () => {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="SucursalScreen"
         component={SucursalScreen}
         options={{ headerShown: false }}
@@ -34,7 +34,7 @@ const TicketStack = () => {
         name="SeatsScreen"
         component={SeatsScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
