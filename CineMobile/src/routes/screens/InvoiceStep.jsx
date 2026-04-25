@@ -10,6 +10,7 @@ const InvoiceStep = ({
   styles,
 }) => {
 
+  
   return (
     <>
       <Text style={styles.header}>Factura</Text>

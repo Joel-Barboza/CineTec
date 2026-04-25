@@ -29,4 +29,5 @@ const CinemaStep = ({ cinemas, selectedCinema, setSelectedCinema, styles }) => {
   );
 };
 
+
 export default CinemaStep;

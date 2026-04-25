@@ -32,6 +32,7 @@ const SeatStep = ({ ROWS, COLS, selectedSeats, toggleSeat, styles }) => {
         </View>
       ))}
     </>
+    
   );
 };
 

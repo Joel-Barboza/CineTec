@@ -39,3 +39,4 @@ const MovieStep = ({ movies, selectedMovie, setSelectedMovie, styles }) => {
 };
 
 export default MovieStep;
+
