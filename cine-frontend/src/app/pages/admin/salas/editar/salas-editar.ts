@@ -1,11 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-salas-editar',
   standalone: true,
-  template: `
-    <h1>Salas — Editar</h1>
-    <p class="text-muted">Página de editar de Salas.</p>
-  `,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './salas-editar.html',
 })
-export class SalasEditar {}
+export class SalasEditar {
+
+  id = signal('');
+  sucursal = signal('');
+  filas = signal<number | null>(null);
+  columnas = signal<number | null>(null);
+  capacidad = signal<number | null>(null);
+
+  guardar() {
+    console.log({
+      id: this.id(),
+      sucursal: this.sucursal(),
+      filas: this.filas(),
+      columnas: this.columnas(),
+      capacidad: this.capacidad()
+    });
+
+  }
+
+}

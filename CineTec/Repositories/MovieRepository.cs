@@ -32,5 +32,14 @@ namespace CineTec.Repositories
 
             File.WriteAllText(filePath, json);
         }
+
+        public Movie GetLast()
+        {
+            var movies = GetAll();
+            if (movies == null || movies.Count == 0)
+                return null;
+
+            return movies.Last();
+        }
     }
 }
